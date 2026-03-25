@@ -105,24 +105,15 @@
     align-self: stretch;
   }
   .logo-partner-img {
-    height: 100%;
-    aspect-ratio: 61.3 / 24.32;
-    position: relative;
+    height: 24px;
+    display: flex;
+    align-items: center;
     flex-shrink: 0;
   }
-  .logo-partner-img > div {
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-    pointer-events: none;
-  }
   .logo-partner-img img {
-    position: absolute;
-    top: 0;
-    left: -7.02%;
-    width: 115.13%;
-    height: 124.81%;
-    max-width: none;
+    height: 100%;
+    width: auto;
+    display: block;
   }
 
   .nav-actions {
@@ -200,6 +191,8 @@
     display: flex;
     flex-direction: column;
     position: relative;
+    min-width: 0;
+    transition: flex 0.45s cubic-bezier(0.4, 0, 0.2, 1);
   }
   .content-body {
     flex: 1;
@@ -207,7 +200,8 @@
     display: flex;
     flex-direction: column;
     gap: 24px;
-    overflow: hidden;
+    overflow-y: auto;
+    min-height: 0;
   }
 
   /* ── Video Player ────────────────────────────── */
@@ -217,8 +211,8 @@
     background: #000;
     border-radius: var(--radius-md);
     overflow: hidden;
-    flex: 1;
-    min-height: 0;
+    aspect-ratio: 16 / 9;
+    flex-shrink: 0;
   }
   .video-wrapper video {
     width: 100%;
@@ -277,6 +271,7 @@
     height: 40px;
     z-index: 10;
     cursor: pointer;
+    transition: opacity 0.3s ease;
   }
   .scrubber-track {
     position: absolute;
@@ -311,6 +306,17 @@
     pointer-events: none;
   }
 
+  .controls-gradient {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 160px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.45) 100%);
+    border-radius: 0 0 4px 4px;
+    pointer-events: none;
+    z-index: 1;
+    transition: opacity 0.3s ease;
+  }
+
   /* ── Control Bar ─────────────────────────────── */
   .control-bar {
     position: absolute;
@@ -321,6 +327,17 @@
     justify-content: space-between;
     padding: 0 8px;
     z-index: 10;
+    transition: opacity 0.3s ease;
+  }
+
+  .video-wrapper.controls-hidden .scrubber-area,
+  .video-wrapper.controls-hidden .control-bar,
+  .video-wrapper.controls-hidden .controls-gradient {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .video-wrapper.controls-hidden {
+    cursor: none;
   }
   .controls-left, .controls-right {
     display: flex;
@@ -497,24 +514,39 @@
     text-align: center;
     white-space: nowrap;
   }
+  .toolbar-tool-icon.resources img {
+    filter: brightness(0) opacity(0.45);
+  }
   .toolbar-tool.active {
     background: #e8eef7;
   }
   .toolbar-tool.active span {
-    color: #0f1114;
+    color: #2D3440;
+  }
+  .toolbar-tool.active .toolbar-tool-icon img {
+    filter: brightness(0) opacity(0.82);
   }
 
   /* ── Practice Panel ──────────────────────────── */
   .practice-panel {
-    display: none;
     position: absolute;
-    inset: 0;
+    top: 0; bottom: 0; right: 0;
+    width: 0;
     background: var(--white);
     border-radius: var(--radius-lg) 0 0 var(--radius-lg);
     z-index: 20;
+    display: flex;
     flex-direction: column;
+    overflow: hidden;
+    opacity: 0;
+    transition: width 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.35s ease;
   }
-  .practice-panel.open { display: flex; }
+  .practice-panel.open {
+    width: 100%;
+    opacity: 1;
+    overflow-y: auto;
+  }
 
   .practice-panel-header {
     display: flex;
@@ -835,15 +867,26 @@
 
   /* ── Resources Panel ─────────────────────────── */
   .resources-panel {
-    display: none;
-    width: 547px;
+    width: 0;
     flex-shrink: 0;
     background: var(--white);
-    border-left: 1px solid var(--border);
+    border-left: 1px solid transparent;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: width 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 0.3s ease,
+                opacity 0.35s ease;
+    opacity: 0;
+  }
+  .resources-panel.open {
+    width: 547px;
+    min-width: 547px;
+    border-left-color: var(--border);
+    opacity: 1;
     overflow-y: auto;
     overflow-x: hidden;
   }
-  .resources-panel.open { display: flex; flex-direction: column; }
 
   .resources-panel-header {
     display: flex;
@@ -944,6 +987,55 @@
     margin: 0;
   }
   .resources-content .resources-body li { margin: 0; }
+
+  /* ── Responsive ────────────────────────────────── */
+  @media (max-width: 900px) {
+    .main-layout {
+      flex-direction: column;
+      padding: 0 8px 8px;
+    }
+    .left-sidebar {
+      display: none;
+    }
+    .content-area {
+      flex-direction: column;
+    }
+    .content-main {
+      border-radius: var(--radius-lg);
+    }
+    .resources-panel.open {
+      width: 100%;
+      min-width: 0;
+    }
+    .right-toolbar {
+      width: 100%;
+      flex-direction: row;
+      border-left: none;
+      border-top: 1px solid var(--border);
+      border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+      padding: 8px 16px;
+      overflow-x: auto;
+    }
+    .toolbar-ctas {
+      flex-direction: row;
+      gap: 4px;
+    }
+    .toolbar-tool {
+      width: auto;
+      height: auto;
+      padding: 8px 12px;
+      flex-direction: row;
+      gap: 6px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .page { height: auto; min-height: 100vh; }
+    .main-layout { gap: 8px; }
+    .content-body { padding: 12px 12px 0; gap: 16px; }
+    .top-nav { padding: 12px; }
+    .lecture-title { font-size: 18px; line-height: 24px; }
+  }
 </style>
 </head>
 <body>
@@ -957,16 +1049,9 @@
           <div class="logo-coursera">
             <img src="https://www.figma.com/api/mcp/asset/c947d2cb-ef49-429b-87ac-74f4f3a4264e" alt="Coursera">
           </div>
-          <div class="logo-divider-wrap">
-            <div class="logo-divider-inner">
-              <img src="https://www.figma.com/api/mcp/asset/55dcc5cd-b973-4ca6-8183-61008fb117e0" alt="">
-            </div>
-          </div>
           <div class="logo-partner-wrap">
             <div class="logo-partner-img">
-              <div>
-                <img src="https://www.figma.com/api/mcp/asset/ee531929-36ce-4954-b082-88ba80e3a127" alt="Google">
-              </div>
+              <img src="https://www.figma.com/api/mcp/asset/ee531929-36ce-4954-b082-88ba80e3a127" alt="Google">
             </div>
           </div>
         </div>
@@ -997,8 +1082,9 @@
   <div class="main-layout">
     <aside class="left-sidebar">
       <div class="sidebar-icon">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
-          <rect x="2" y="4" width="16" height="12" rx="1.5"/><line x1="10" y1="4" x2="10" y2="16"/>
+        <svg width="16" height="16" viewBox="0 0 22 18" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="1" y="1" width="20" height="16" rx="2.5"/>
+          <line x1="13.5" y1="1" x2="13.5" y2="17"/>
         </svg>
       </div>
     </aside>
@@ -1058,6 +1144,9 @@
                 <div class="scrubber-dot" id="scrubberDot"></div>
               </div>
             </div>
+
+            <!-- Gradient overlay for controls visibility -->
+            <div class="controls-gradient"></div>
 
             <!-- Control Bar -->
             <div class="control-bar">
@@ -1321,7 +1410,7 @@
           </div>
           <div class="toolbar-tool">
             <div class="toolbar-tool-icon resources">
-              <img src="https://www.figma.com/api/mcp/asset/d0ba24bb-4c2f-4b94-9b26-120c2db69d9d" alt="">
+              <img src="https://www.figma.com/api/mcp/asset/db5fbf40-bc49-484d-aefa-5d48cbbd8e95" alt="">
             </div>
             <span>Resources</span>
           </div>
@@ -1391,6 +1480,52 @@
 
   syncPlayPauseIcon();
 
+  var hideTimer = null;
+  var isHovering = false;
+
+  function showControls() {
+    videoWrapper.classList.remove('controls-hidden');
+  }
+
+  function scheduleHide() {
+    clearTimeout(hideTimer);
+    if (!video.paused) {
+      hideTimer = setTimeout(function() {
+        if (!isHovering && !video.paused) {
+          videoWrapper.classList.add('controls-hidden');
+        }
+      }, 2500);
+    }
+  }
+
+  function onControlsStateChange() {
+    if (video.paused) {
+      clearTimeout(hideTimer);
+      showControls();
+    } else {
+      scheduleHide();
+    }
+  }
+
+  videoWrapper.addEventListener('mouseenter', function() {
+    isHovering = true;
+    showControls();
+    clearTimeout(hideTimer);
+  });
+
+  videoWrapper.addEventListener('mouseleave', function() {
+    isHovering = false;
+    scheduleHide();
+  });
+
+  videoWrapper.addEventListener('mousemove', function() {
+    showControls();
+    scheduleHide();
+  });
+
+  video.addEventListener('play', onControlsStateChange);
+  video.addEventListener('pause', onControlsStateChange);
+
   video.addEventListener('loadeddata', function() {
     if (video.paused && video.currentTime === 0) {
       video.currentTime = 0.001;
@@ -1440,11 +1575,21 @@
     practicePanel.classList.add('open');
     if (toolbarTools.length > 4) toolbarTools[4].classList.add('active');
     else toolbarTools[toolbarTools.length - 1].classList.add('active');
+    if (!video.paused) video.pause();
   }
 
   replayBtn.addEventListener('click', function() {
     video.currentTime = Math.max(0, video.currentTime - 10);
     showCard(resourceCard);
+  });
+
+  var sidebarIcon = document.querySelector('.sidebar-icon');
+  sidebarIcon.addEventListener('click', function() {
+    if (resourcesPanel.classList.contains('open')) {
+      closeAllPanels();
+    } else {
+      openResourcesPanel();
+    }
   });
 
   resourceCard.addEventListener('click', function() {
@@ -1461,6 +1606,7 @@
 
   closePracticeBtn.addEventListener('click', function() {
     closeAllPanels();
+    video.play();
   });
 
   document.querySelectorAll('.resources-tag').forEach(function(tag) {
