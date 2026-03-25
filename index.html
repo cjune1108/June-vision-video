@@ -1,0 +1,1529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSS advanced – Coursera</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+  :root {
+    --bg: #f2f5fa;
+    --white: #fff;
+    --primary: #1f1f1f;
+    --weak: #5b6780;
+    --accent: #3587fc;
+    --dark-navy: #002761;
+    --border: #dae1ed;
+    --font: 'Source Sans 3', sans-serif;
+    --radius-lg: 16px;
+    --radius-md: 10px;
+    --radius-sm: 8px;
+  }
+
+  html, body {
+    height: 100%;
+    background: var(--bg);
+    font-family: var(--font);
+    overflow-x: hidden;
+  }
+
+  .page {
+    max-width: 1440px;
+    width: 100%;
+    height: 100vh;
+    margin: 0 auto;
+    position: relative;
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── Top Nav ─────────────────────────────────── */
+  .top-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    height: 68px;
+    background: var(--bg);
+  }
+
+  .logo-area {
+    display: flex;
+    align-items: center;
+  }
+  .logo-desktop {
+    display: flex;
+    align-items: center;
+    gap: 8.107px;
+  }
+  .logo-inner {
+    display: flex;
+    align-items: center;
+    gap: 12.16px;
+  }
+  .logo-coursera {
+    width: 104.377px;
+    height: 15.201px;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .logo-coursera img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .logo-divider-wrap {
+    width: 0;
+    height: 24.321px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .logo-divider-inner {
+    transform: rotate(90deg);
+    width: 24.321px;
+    height: 0;
+    position: relative;
+  }
+  .logo-divider-inner img {
+    position: absolute;
+    inset: -0.51px -2.08%;
+    width: auto;
+    height: auto;
+  }
+  .logo-partner-wrap {
+    display: flex;
+    align-items: center;
+    align-self: stretch;
+  }
+  .logo-partner-img {
+    height: 100%;
+    aspect-ratio: 61.3 / 24.32;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .logo-partner-img > div {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .logo-partner-img img {
+    position: absolute;
+    top: 0;
+    left: -7.02%;
+    width: 115.13%;
+    height: 124.81%;
+    max-width: none;
+  }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .icon-btn {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--primary);
+  }
+  .icon-btn svg { width: 19px; height: 19px; }
+  .avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 200px;
+    background: var(--dark-navy);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .sparkle-icon {
+    width: 24px;
+    height: 24px;
+    position: relative;
+  }
+  .sparkle-icon svg { width: 24px; height: 24px; }
+
+  /* ── Main Layout ─────────────────────────────── */
+  .main-layout {
+    display: flex;
+    gap: 16px;
+    padding: 0 16px 16px;
+    flex: 1;
+    min-height: 0;
+    align-items: stretch;
+  }
+
+  .left-sidebar {
+    width: 52px;
+    flex-shrink: 0;
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 16px;
+    overflow: hidden;
+  }
+  .left-sidebar .sidebar-icon {
+    width: 20px;
+    height: 20px;
+    color: var(--weak);
+    cursor: pointer;
+  }
+  .left-sidebar .sidebar-icon svg { width: 20px; height: 20px; }
+
+  .content-area {
+    flex: 1;
+    display: flex;
+    min-width: 0;
+  }
+  .content-main {
+    flex: 1;
+    background: var(--white);
+    border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  .content-body {
+    flex: 1;
+    padding: 16px 16px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    overflow: hidden;
+  }
+
+  /* ── Video Player ────────────────────────────── */
+  .video-wrapper {
+    position: relative;
+    width: 100%;
+    background: #000;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    flex: 1;
+    min-height: 0;
+  }
+  .video-wrapper video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    border-radius: 8px;
+  }
+
+  .video-gradient-bottom {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 10.2%;
+    background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 100%);
+    border-radius: 0 0 4px 4px;
+    pointer-events: none;
+  }
+
+  /* ── Engagement Curve Overlay ────────────────── */
+  .engagement-overlay {
+    position: absolute;
+    left: 0; right: 0;
+    bottom: 76px;
+    height: 160px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    z-index: 5;
+  }
+  .engagement-overlay.visible {
+    opacity: 1;
+  }
+  .engagement-backdrop {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.15) 50%, transparent 100%);
+  }
+  .engagement-curve {
+    position: absolute;
+    left: 0; right: 0;
+    bottom: 0;
+    height: 76px;
+  }
+  .engagement-curve img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: fill;
+  }
+
+  /* ── Scrubber / Progress Bar ─────────────────── */
+  .scrubber-area {
+    position: absolute;
+    left: 0; right: 0; bottom: 76px;
+    height: 40px;
+    z-index: 10;
+    cursor: pointer;
+  }
+  .scrubber-track {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 4px;
+  }
+  .scrubber-remaining {
+    position: absolute;
+    top: 0; right: 0; bottom: 20%;
+    background: #e7e7e7;
+    opacity: 0.4;
+    left: 0%;
+    z-index: 1;
+  }
+  .scrubber-played {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    background: var(--accent);
+    width: 0%;
+    z-index: 2;
+  }
+  .scrubber-dot {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: var(--accent);
+    border-radius: 9999px;
+    top: -4px;
+    z-index: 3;
+    transform: translateX(-50%);
+    left: 0%;
+    pointer-events: none;
+  }
+
+  /* ── Control Bar ─────────────────────────────── */
+  .control-bar {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 76px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 8px;
+    z-index: 10;
+  }
+  .controls-left, .controls-right {
+    display: flex;
+    align-items: center;
+  }
+  .ctrl-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60px;
+    padding: 0 8px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: white;
+    font-family: var(--font);
+  }
+  .ctrl-icon {
+    width: 28px;
+    height: 28px;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .ctrl-icon img {
+    position: absolute;
+    display: block;
+    max-width: none;
+  }
+  .ctrl-icon.pause img     { inset: 20.83%;  width: 58.34%; height: 58.34%; }
+  .ctrl-icon.play img      { inset: 20.83%;  width: 58.34%; height: 58.34%; }
+  .ctrl-icon.volume img    { top: 22.48%; left: 20.83%; width: 56.25%; height: 55.04%; }
+  .ctrl-icon.replay img    { top: 5.99%; left: 12.5%; width: 75%; height: 85.68%; }
+  .ctrl-icon.forward img   { top: 5.99%; left: 12.5%; width: 75%; height: 85.68%; }
+  .ctrl-icon.subs img      { top: 16.67%; left: 8.33%; width: 83.34%; height: 66.66%; }
+  .ctrl-icon.settings img  { top: 8.33%; left: 10.33%; width: 79.34%; height: 83.34%; }
+  .ctrl-icon.fullscr img   { inset: 12.5%;  width: 75%; height: 75%; }
+
+  .ctrl-time {
+    font-size: 18px;
+    font-weight: 600;
+    color: white;
+    padding: 0 8px;
+    white-space: pre;
+    line-height: 60px;
+    font-family: 'Source Sans 3', sans-serif;
+  }
+  .ctrl-speed {
+    font-size: 24px;
+    font-weight: 700;
+    color: white;
+    padding: 0 8px;
+    line-height: 60px;
+    cursor: pointer;
+    font-family: var(--font);
+  }
+
+  /* ── Lecture Title Row ───────────────────────── */
+  .lecture-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 100%;
+    flex-shrink: 0;
+  }
+  .lecture-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--primary);
+    line-height: 28px;
+    letter-spacing: -0.12px;
+  }
+  .download-btn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .download-btn svg { width: 16px; height: 16px; color: var(--weak); }
+  .download-btn span {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--weak);
+    letter-spacing: -0.042px;
+    line-height: 18px;
+  }
+
+  /* ── Footer ──────────────────────────────────── */
+  .content-footer {
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 16px;
+    flex-shrink: 0;
+  }
+  .next-btn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 16px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-family: var(--font);
+    font-size: 14px;
+    font-weight: 600;
+    color: #0f1114;
+    letter-spacing: 0.14px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .next-btn:hover { background: #f6f8fb; }
+  .next-btn svg { width: 20px; height: 20px; }
+
+  /* ── Right Toolbar ───────────────────────────── */
+  .right-toolbar {
+    width: 88px;
+    flex-shrink: 0;
+    background: var(--white);
+    border-left: 1px solid var(--border);
+    border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px 8px 16px;
+  }
+  .toolbar-ctas {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+    width: 100%;
+  }
+  .toolbar-tool {
+    width: 72px;
+    height: 64px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    padding: 2px 0;
+    transition: background 0.15s;
+  }
+  .toolbar-tool:hover { background: #f2f5fa; }
+  .toolbar-tool-icon {
+    width: 20px;
+    height: 20px;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .toolbar-tool-icon img {
+    position: absolute;
+    display: block;
+    max-width: none;
+  }
+  .toolbar-tool-icon.transcript img { top:16.67%; left:8.33%; width:83.34%; height:66.66%; }
+  .toolbar-tool-icon.notes img      { top:10%; left:20%; width:60%; height:80%; }
+  .toolbar-tool-icon.files img      { inset:10%; width:80%; height:80%; }
+  .toolbar-tool-icon.resources img   { inset:0; width:100%; height:100%; }
+  .toolbar-tool span {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--weak);
+    line-height: 20px;
+    letter-spacing: 0.14px;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .toolbar-tool.active {
+    background: #e8eef7;
+  }
+  .toolbar-tool.active span {
+    color: #0f1114;
+  }
+
+  /* ── Practice Panel ──────────────────────────── */
+  .practice-panel {
+    display: none;
+    position: absolute;
+    inset: 0;
+    background: var(--white);
+    border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+    z-index: 20;
+    flex-direction: column;
+  }
+  .practice-panel.open { display: flex; }
+
+  .practice-panel-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 16px;
+    height: 56px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .practice-panel-header h2 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #0f1114;
+    line-height: 20px;
+    letter-spacing: -0.048px;
+  }
+  .practice-panel-header-icons {
+    display: flex;
+    gap: 10px;
+  }
+  .practice-panel-header-icons .rp-icon {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+  }
+  .practice-panel-header-icons .rp-icon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .practice-body {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+  }
+  .practice-left {
+    width: 50%;
+    overflow-y: auto;
+    padding: 26px 28px;
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+  }
+  .practice-left h3 {
+    font-size: 30px;
+    font-weight: 600;
+    color: #000;
+    line-height: 36px;
+    letter-spacing: -0.15px;
+    margin: 0;
+  }
+  .ai-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    height: 22px;
+    padding: 0 8px 0 4px;
+    border-radius: 999px;
+    background: #e3eeff;
+    border: 1px solid white;
+    font-size: 14px;
+    font-weight: 600;
+    color: #0048b0;
+    letter-spacing: -0.042px;
+    line-height: 18px;
+  }
+  .ai-tag svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+  .practice-problem-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #000;
+    line-height: 20px;
+    letter-spacing: -0.048px;
+    margin-bottom: 8px;
+  }
+  .practice-problem-body {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--primary);
+    line-height: 24px;
+  }
+  .practice-examples-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #000;
+    line-height: 20px;
+    letter-spacing: -0.048px;
+    margin-bottom: 8px;
+  }
+  .practice-example-card {
+    background: #f0f6ff;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 8px;
+  }
+  .practice-example-card .ex-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #0f1114;
+    line-height: 18px;
+    letter-spacing: -0.042px;
+    margin-bottom: 8px;
+  }
+  .practice-example-card pre {
+    font-family: var(--font);
+    font-size: 14px;
+    font-weight: 400;
+    color: #000;
+    line-height: 20px;
+    margin: 0;
+    white-space: pre-wrap;
+  }
+
+  .practice-right {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    padding: 23px 28px 28px;
+    gap: 13px;
+    overflow: hidden;
+  }
+  .practice-right .codebox-label {
+    font-size: 16px;
+    font-weight: 600;
+    color: #000;
+    line-height: 20px;
+    letter-spacing: -0.048px;
+  }
+  .practice-editor {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .practice-editor-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 16px;
+    background: #e8eef7;
+    font-size: 12px;
+    font-weight: 600;
+    color: #000;
+    flex-shrink: 0;
+  }
+  .practice-editor-header svg { width: 18px; height: 18px; cursor: pointer; }
+  .practice-editor-code {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+    padding: 8px 16px;
+    background: white;
+    font-family: 'IBM Plex Mono', 'Courier New', monospace;
+    font-size: 12px;
+    line-height: 23px;
+    color: #0f1114;
+    display: flex;
+    gap: 12px;
+  }
+  .practice-editor-code .line-nums {
+    color: #0f1114;
+    user-select: none;
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .practice-editor-code .code-text {
+    flex: 1;
+    white-space: pre;
+  }
+  .practice-editor-code .kw { color: #c27a02; }
+  .practice-editor-code .type { color: #0056D2; }
+  .practice-editor-code .str { color: #067d17; }
+  .practice-editor-code .cmt { color: #8c8c8c; }
+
+  .practice-actions {
+    display: flex;
+    gap: 16px;
+    flex-shrink: 0;
+  }
+  .practice-actions .btn-run {
+    flex: 1;
+    height: 44px;
+    background: #0056D2;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: var(--font);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .practice-actions .btn-run:hover { background: #004bb5; }
+  .practice-actions .btn-run svg { width: 16px; height: 16px; }
+  .practice-actions .btn-reset {
+    width: 140px;
+    height: 44px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-family: var(--font);
+    font-size: 14px;
+    font-weight: 600;
+    color: #0f1114;
+    letter-spacing: 0.14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .practice-actions .btn-reset:hover { background: #f6f8fb; }
+  .practice-actions .btn-reset svg { width: 16px; height: 16px; }
+
+  .practice-output-label {
+    font-size: 16px;
+    font-weight: 600;
+    color: #000;
+    line-height: 20px;
+    letter-spacing: -0.048px;
+    flex-shrink: 0;
+  }
+  .practice-output {
+    height: 100px;
+    background: #1e1e1e;
+    border-radius: 8px;
+    flex-shrink: 0;
+  }
+
+  /* ── Contextual Resource Card ────────────────── */
+  .resource-card {
+    position: absolute;
+    left: 0; right: 0;
+    bottom: 84px;
+    z-index: 12;
+    display: none;
+    padding: 0 8px;
+    cursor: pointer;
+  }
+  .resource-card.visible { display: block; }
+  .resource-card-inner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: 48px;
+    padding-right: 12px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    overflow: hidden;
+    transition: background 0.15s;
+  }
+  .resource-card-inner:hover { background: rgba(0, 0, 0, 0.4); }
+  .resource-card-thumb {
+    width: 80px;
+    height: 54px;
+    border-radius: 4px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .resource-card-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .resource-card-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+    min-width: 0;
+  }
+  .resource-card-title {
+    font-family: 'Inter', var(--font);
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    color: white;
+    letter-spacing: -0.15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .resource-card-sub {
+    font-family: 'Inter', var(--font);
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .resource-card-sub u {
+    text-decoration: underline;
+    text-decoration-skip-ink: none;
+  }
+  .resource-card-time {
+    font-family: 'Inter', var(--font);
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    color: #6a7282;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* ── Resources Panel ─────────────────────────── */
+  .resources-panel {
+    display: none;
+    width: 547px;
+    flex-shrink: 0;
+    background: var(--white);
+    border-left: 1px solid var(--border);
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  .resources-panel.open { display: flex; flex-direction: column; }
+
+  .resources-panel-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 16px;
+    height: 56px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .resources-panel-header h2 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #0f1114;
+    line-height: 20px;
+    letter-spacing: -0.048px;
+  }
+  .resources-panel-header-icons {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .resources-panel-header-icons .rp-icon {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    position: relative;
+  }
+  .resources-panel-header-icons .rp-icon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .resources-tags {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding: 20px 16px;
+    flex-shrink: 0;
+    background: white;
+  }
+  .resources-tag {
+    height: 24px;
+    width: 96px;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: #0f1114;
+    cursor: pointer;
+    white-space: nowrap;
+    background: var(--white);
+    border: 1px solid var(--border);
+  }
+  .resources-tag.active {
+    background: #f2f5fa;
+    border-color: #f2f5fa;
+  }
+
+  .resources-content {
+    padding: 0 16px 24px;
+    flex: 1;
+  }
+  .resources-content h3 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #0f1114;
+    line-height: 28px;
+    letter-spacing: -0.12px;
+    margin-bottom: 16px;
+  }
+  .resources-content .resources-subtitle {
+    font-size: 16px;
+    font-weight: 600;
+    color: #000;
+    line-height: 20px;
+    letter-spacing: -0.048px;
+    margin-bottom: 8px;
+  }
+  .resources-content .resources-diagram {
+    width: 100%;
+    border-radius: 4px;
+    margin-bottom: 16px;
+  }
+  .resources-content .resources-body {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--primary);
+    line-height: 24px;
+  }
+  .resources-content .resources-body ul {
+    list-style: disc;
+    padding-left: 24px;
+    margin: 0;
+  }
+  .resources-content .resources-body li { margin: 0; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ═══ Top Nav ═══ -->
+  <nav class="top-nav">
+    <div class="logo-area">
+      <div class="logo-desktop">
+        <div class="logo-inner">
+          <div class="logo-coursera">
+            <img src="https://www.figma.com/api/mcp/asset/c947d2cb-ef49-429b-87ac-74f4f3a4264e" alt="Coursera">
+          </div>
+          <div class="logo-divider-wrap">
+            <div class="logo-divider-inner">
+              <img src="https://www.figma.com/api/mcp/asset/55dcc5cd-b973-4ca6-8183-61008fb117e0" alt="">
+            </div>
+          </div>
+          <div class="logo-partner-wrap">
+            <div class="logo-partner-img">
+              <div>
+                <img src="https://www.figma.com/api/mcp/asset/ee531929-36ce-4954-b082-88ba80e3a127" alt="Google">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="nav-actions">
+      <div class="icon-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+        </svg>
+      </div>
+      <div class="icon-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
+        </svg>
+      </div>
+      <div class="sparkle-icon">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M10 2L12 8L18 10L12 12L10 18L8 12L2 10L8 8L10 2Z" fill="#0056D2"/>
+          <path d="M18 14L19 17L22 18L19 19L18 22L17 19L14 18L17 17L18 14Z" fill="#0056D2"/>
+        </svg>
+      </div>
+      <div class="avatar">N</div>
+    </div>
+  </nav>
+
+  <!-- ═══ Main Layout ═══ -->
+  <div class="main-layout">
+    <aside class="left-sidebar">
+      <div class="sidebar-icon">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="2" y="4" width="16" height="12" rx="1.5"/><line x1="10" y1="4" x2="10" y2="16"/>
+        </svg>
+      </div>
+    </aside>
+
+    <div class="content-area">
+      <div class="content-main">
+        <div class="content-body">
+
+          <!-- ═══ Video Player ═══ -->
+          <div class="video-wrapper" id="videoWrapper">
+            <video id="videoPlayer" src="tutorial.mp4" preload="auto"></video>
+
+            <!-- Engagement Curve — hidden by default, shown on hover -->
+            <div class="engagement-overlay">
+              <div class="engagement-backdrop"></div>
+              <div class="engagement-curve">
+                <img src="https://www.figma.com/api/mcp/asset/f2d2eb3b-0b1a-45e8-b768-69425f5bb026" alt="">
+              </div>
+            </div>
+
+            <!-- Bottom gradient -->
+            <div class="video-gradient-bottom"></div>
+
+            <!-- Contextual Resource Card (hidden by default) -->
+            <div class="resource-card" id="resourceCard">
+              <div class="resource-card-inner">
+                <div class="resource-card-thumb">
+                  <img src="https://www.figma.com/api/mcp/asset/3fb3ed13-c49e-4f99-8996-36de3eabf482" alt="">
+                </div>
+                <div class="resource-card-text">
+                  <div class="resource-card-title">Having trouble with this concept?</div>
+                  <div class="resource-card-sub">Many learners find it helpful to engage in this interactive graph. <u>Check it out &gt;</u></div>
+                </div>
+                <div class="resource-card-time">3:30</div>
+              </div>
+            </div>
+
+            <!-- Contextual Practice Card (hidden by default) -->
+            <div class="resource-card" id="practiceCard">
+              <div class="resource-card-inner">
+                <div class="resource-card-thumb">
+                  <img src="https://www.figma.com/api/mcp/asset/ee8ac591-947f-49a5-916e-8869c1e63737" alt="">
+                </div>
+                <div class="resource-card-text">
+                  <div class="resource-card-title">Ready to try it yourself?</div>
+                  <div class="resource-card-sub" style="color:#f2f5fa"><u>Learn this concept by coding it up &gt;</u></div>
+                </div>
+                <div class="resource-card-time">3:30</div>
+              </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="scrubber-area" id="scrubberArea">
+              <div class="scrubber-track">
+                <div class="scrubber-remaining" id="scrubberRemaining"></div>
+                <div class="scrubber-played" id="scrubberProgress"></div>
+                <div class="scrubber-dot" id="scrubberDot"></div>
+              </div>
+            </div>
+
+            <!-- Control Bar -->
+            <div class="control-bar">
+              <div class="controls-left">
+                <button class="ctrl-btn" id="playPauseBtn" aria-label="Play/Pause">
+                  <div class="ctrl-icon pause" id="pauseIcon">
+                    <img src="https://www.figma.com/api/mcp/asset/b37e47c3-1d58-41ec-974d-937a49474964" alt="Pause">
+                  </div>
+                  <svg id="playIcon" width="28" height="28" viewBox="0 0 28 28" fill="none" style="display:none; flex-shrink:0;">
+                    <path d="M9.33 6.22v15.56c0 .8.87 1.3 1.56.88l12.45-7.78a1.04 1.04 0 000-1.76L10.89 5.34c-.69-.42-1.56.08-1.56.88z" fill="white"/>
+                  </svg>
+                </button>
+                <button class="ctrl-btn" aria-label="Volume">
+                  <div class="ctrl-icon volume">
+                    <img src="https://www.figma.com/api/mcp/asset/8a49c681-1e1e-40d1-bdf3-8b2b490c3924" alt="Volume">
+                  </div>
+                </button>
+                <button class="ctrl-btn" id="replayBtn" aria-label="Replay 10s">
+                  <div class="ctrl-icon replay">
+                    <img src="https://www.figma.com/api/mcp/asset/f525a9df-aab8-4f1b-9ace-1b475d7d9a03" alt="Replay 10">
+                  </div>
+                </button>
+                <span class="ctrl-time" id="timeDisplay">0:00  /  0:00</span>
+                <button class="ctrl-btn" id="forwardBtn" aria-label="Forward 10s">
+                  <div class="ctrl-icon forward">
+                    <img src="https://www.figma.com/api/mcp/asset/7ce8b3dd-2682-4dd1-b752-29b334ac0876" alt="Forward 10">
+                  </div>
+                </button>
+              </div>
+              <div class="controls-right">
+                <span class="ctrl-speed">1x</span>
+                <button class="ctrl-btn" aria-label="Subtitles">
+                  <div class="ctrl-icon subs">
+                    <img src="https://www.figma.com/api/mcp/asset/379036d1-77a5-4de2-acbb-596f09a0c240" alt="Subtitles">
+                  </div>
+                </button>
+                <button class="ctrl-btn" aria-label="Settings">
+                  <div class="ctrl-icon settings">
+                    <img src="https://www.figma.com/api/mcp/asset/ce65d150-5242-4ed5-aebb-a042bb00771c" alt="Settings">
+                  </div>
+                </button>
+                <button class="ctrl-btn" id="fullscreenBtn" aria-label="Fullscreen">
+                  <div class="ctrl-icon fullscr">
+                    <img src="https://www.figma.com/api/mcp/asset/b028ec16-df36-4f7b-903d-ad5e78f7a835" alt="Fullscreen">
+                  </div>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Lecture Title + Download -->
+          <div class="lecture-row">
+            <h1 class="lecture-title">CSS advanced</h1>
+            <div class="download-btn">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M8 2v9m0 0l-3-3m3 3l3-3M3 13h10"/>
+              </svg>
+              <span>Download</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="content-footer">
+          <button class="next-btn">
+            Go to next item
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 4l6 6-6 6"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- ═══ Practice Panel (hidden by default, overlays content-main) ═══ -->
+        <div class="practice-panel" id="practicePanel">
+        <div class="practice-panel-header">
+          <h2>Practice</h2>
+          <div class="practice-panel-header-icons">
+            <div class="rp-icon" title="Maximize">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#1f1f1f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
+              </svg>
+            </div>
+            <div class="rp-icon" id="closePracticeBtn" title="Close">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#1f1f1f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="practice-body">
+          <div class="practice-left">
+            <div>
+              <h3>Coding Exercise: Loops</h3>
+              <div style="margin-top:8px">
+                <span class="ai-tag">
+                  <svg viewBox="0 0 16 16" fill="none"><path d="M7 1.5L8.5 5.5L12.5 7L8.5 8.5L7 12.5L5.5 8.5L1.5 7L5.5 5.5L7 1.5Z" fill="#0048b0"/><path d="M12.5 10L13.2 12L15 12.5L13.2 13.2L12.5 15L11.8 13.2L10 12.5L11.8 12L12.5 10Z" fill="#0048b0"/></svg>
+                  AI-generated
+                </span>
+              </div>
+            </div>
+            <div>
+              <p class="practice-problem-title">Problem: The Right-Angled Star Pattern</p>
+              <div class="practice-problem-body">
+                <p>Write a Java program that reads a positive integer n.</p>
+                <p>Using loops, print a right-angled triangle made of asterisks (*) that is left-aligned.</p>
+              </div>
+            </div>
+            <div>
+              <p class="practice-examples-title">Examples</p>
+              <div class="practice-example-card">
+                <p class="ex-label">Input: n = 3</p>
+                <pre>Output:
+*
+**
+***</pre>
+              </div>
+              <div class="practice-example-card">
+                <p class="ex-label">Input: n = 5</p>
+                <pre>Output:
+*
+**
+***
+****
+*****</pre>
+              </div>
+              <div class="practice-example-card">
+                <p class="ex-label">Input: n=3</p>
+                <pre>Output:
+*
+**
+***
+****
+*****
+******
+*******</pre>
+              </div>
+            </div>
+          </div>
+          <div class="practice-right">
+            <p class="codebox-label">Codebox</p>
+            <div class="practice-editor">
+              <div class="practice-editor-header">
+                <span>Java</span>
+                <svg viewBox="0 0 18 18" fill="none" stroke="#1f1f1f" stroke-width="1.2"><rect x="6" y="2" width="10" height="10" rx="1.5"/><path d="M2 6v8a2 2 0 002 2h8"/></svg>
+              </div>
+              <div class="practice-editor-code">
+                <div class="line-nums">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17</div>
+                <div class="code-text"><span class="kw">public class</span> <span class="type">RightTrianglePattern</span> {
+    <span class="kw">public static void</span> main (<span class="type">String</span>[] args) {
+
+        <span class="cmt">// 1. Print the number of rows</span>
+        System.out.print(<span class="str">"Enter the number of rows (n): "</span>);
+
+        <span class="cmt">// 2. OUTER LOOP: Controls the Row Number (i)</span>
+        <span class="cmt">// Runs from 1 up to n</span>
+        <span class="kw">for</span> () {
+            <span class="cmt">// 3. INNER LOOP: Controls the Stars per Row (j)</span>
+            <span class="cmt">// Runs from 1 up to i (the current row number)</span>
+            <span class="kw">for</span> (){
+                System.out.print(<span class="str">"*"</span>);
+            }
+        <span class="cmt">// 5. Move to the next line after the row is finished</span>
+        System.out.println();
+    }
+}</div>
+              </div>
+            </div>
+            <div class="practice-actions">
+              <button class="btn-run">
+                <svg viewBox="0 0 16 16" fill="white"><path d="M4 2.5v11l9.5-5.5L4 2.5z"/></svg>
+                Run
+              </button>
+              <button class="btn-reset">
+                <svg viewBox="0 0 16 16" fill="none" stroke="#0f1114" stroke-width="1.5" stroke-linecap="round"><path d="M2.5 8A5.5 5.5 0 1 1 5 12.5"/><path d="M2 5.5L5 8L2.5 10"/></svg>
+                Reset
+              </button>
+            </div>
+            <p class="practice-output-label">Output</p>
+            <div class="practice-output"></div>
+          </div>
+        </div>
+      </div>
+      </div>
+
+      <!-- ═══ Resources Panel (hidden by default) ═══ -->
+      <div class="resources-panel" id="resourcesPanel">
+        <div class="resources-panel-header">
+          <h2>Resources</h2>
+          <div class="resources-panel-header-icons">
+            <div class="rp-icon" title="Maximize">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#1f1f1f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
+              </svg>
+            </div>
+            <div class="rp-icon" id="closeResourcesBtn" title="Close">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#1f1f1f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="resources-tags">
+          <div class="resources-tag active" data-time="10">0:10</div>
+          <div class="resources-tag" data-time="154">2:34</div>
+          <div class="resources-tag" data-time="323">5:23</div>
+        </div>
+        <div class="resources-content">
+          <h3>Workflow automation diagram</h3>
+          <p class="resources-subtitle">Architecture of an Azure-based web application system</p>
+          <img class="resources-diagram" src="https://www.figma.com/api/mcp/asset/41a96973-40cc-4376-b0bb-44ea0629ee36" alt="Architecture diagram">
+          <div class="resources-body">
+            <p>User requests go through a load balancer to web servers.</p>
+            <p>Requests are routed via Azure Application Gateway to Azure Functions.</p>
+            <p>Azure Functions handle the logic and interact with:</p>
+            <ul>
+              <li>Azure Storage (files)</li>
+              <li>SQL Database (structured data)</li>
+              <li>Cosmos DB (NoSQL data)</li>
+            </ul>
+            <p>Data may be passed to downstream systems for further processing.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ Right Toolbar ═══ -->
+      <aside class="right-toolbar">
+        <div class="toolbar-ctas">
+          <div class="toolbar-tool">
+            <div class="toolbar-tool-icon transcript">
+              <img src="https://www.figma.com/api/mcp/asset/89edb446-66b0-40d0-87c5-1eef3f56b7f0" alt="">
+            </div>
+            <span>Transcript</span>
+          </div>
+          <div class="toolbar-tool">
+            <div class="toolbar-tool-icon notes">
+              <img src="https://www.figma.com/api/mcp/asset/32ffd782-158b-4eb5-a62b-c28f8dd622b6" alt="">
+            </div>
+            <span>Notes</span>
+          </div>
+          <div class="toolbar-tool">
+            <div class="toolbar-tool-icon files">
+              <img src="https://www.figma.com/api/mcp/asset/4a8f13db-bd7b-44b9-a419-c44afe4ad0e2" alt="">
+            </div>
+            <span>Files</span>
+          </div>
+          <div class="toolbar-tool">
+            <div class="toolbar-tool-icon resources">
+              <img src="https://www.figma.com/api/mcp/asset/d0ba24bb-4c2f-4b94-9b26-120c2db69d9d" alt="">
+            </div>
+            <span>Resources</span>
+          </div>
+          <div class="toolbar-tool">
+            <div class="toolbar-tool-icon resources">
+              <img src="https://www.figma.com/api/mcp/asset/0e8afa0d-d259-412d-b408-95a018d719b3" alt="">
+            </div>
+            <span>Practice</span>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  var video = document.getElementById('videoPlayer');
+  var playPauseBtn = document.getElementById('playPauseBtn');
+  var pauseIcon = document.getElementById('pauseIcon');
+  var playIcon = document.getElementById('playIcon');
+  var timeDisplay = document.getElementById('timeDisplay');
+  var scrubberProgress = document.getElementById('scrubberProgress');
+  var scrubberRemaining = document.getElementById('scrubberRemaining');
+  var scrubberDot = document.getElementById('scrubberDot');
+  var scrubberArea = document.getElementById('scrubberArea');
+  var replayBtn = document.getElementById('replayBtn');
+  var forwardBtn = document.getElementById('forwardBtn');
+  var fullscreenBtn = document.getElementById('fullscreenBtn');
+  var videoWrapper = document.getElementById('videoWrapper');
+
+  function formatTime(s) {
+    if (isNaN(s)) return '0:00';
+    var m = Math.floor(s / 60);
+    var sec = Math.floor(s % 60);
+    return m + ':' + (sec < 10 ? '0' : '') + sec;
+  }
+
+  function syncPlayPauseIcon() {
+    if (video.paused) {
+      pauseIcon.style.display = 'none';
+      playIcon.style.display = '';
+    } else {
+      pauseIcon.style.display = '';
+      playIcon.style.display = 'none';
+    }
+  }
+
+  function updateUI() {
+    if (!video.duration) return;
+    var pct = (video.currentTime / video.duration) * 100;
+    scrubberProgress.style.width = pct + '%';
+    scrubberRemaining.style.left = pct + '%';
+    scrubberDot.style.left = pct + '%';
+    timeDisplay.textContent = formatTime(video.currentTime) + '  /  ' + formatTime(video.duration);
+  }
+
+  video.addEventListener('timeupdate', updateUI);
+  video.addEventListener('loadedmetadata', updateUI);
+
+  playPauseBtn.addEventListener('click', function() {
+    if (video.paused) { video.play(); } else { video.pause(); }
+  });
+
+  video.addEventListener('play', syncPlayPauseIcon);
+  video.addEventListener('pause', syncPlayPauseIcon);
+
+  syncPlayPauseIcon();
+
+  video.addEventListener('loadeddata', function() {
+    if (video.paused && video.currentTime === 0) {
+      video.currentTime = 0.001;
+    }
+    syncPlayPauseIcon();
+  });
+
+  var resourceCard = document.getElementById('resourceCard');
+  var practiceCard = document.getElementById('practiceCard');
+  var resourcesPanel = document.getElementById('resourcesPanel');
+  var practicePanel = document.getElementById('practicePanel');
+  var closeResourcesBtn = document.getElementById('closeResourcesBtn');
+  var closePracticeBtn = document.getElementById('closePracticeBtn');
+  var toolbarTools = document.querySelectorAll('.toolbar-tool');
+  var cardTimer = null;
+
+  function hideAllCards() {
+    resourceCard.classList.remove('visible');
+    practiceCard.classList.remove('visible');
+    clearTimeout(cardTimer);
+  }
+
+  function showCard(card) {
+    hideAllCards();
+    card.classList.add('visible');
+    cardTimer = setTimeout(function() {
+      card.classList.remove('visible');
+    }, 8000);
+  }
+
+  function closeAllPanels() {
+    resourcesPanel.classList.remove('open');
+    practicePanel.classList.remove('open');
+    toolbarTools.forEach(function(t) { t.classList.remove('active'); });
+  }
+
+  function openResourcesPanel() {
+    hideAllCards();
+    closeAllPanels();
+    resourcesPanel.classList.add('open');
+    toolbarTools[3].classList.add('active');
+  }
+
+  function openPracticePanel() {
+    hideAllCards();
+    closeAllPanels();
+    practicePanel.classList.add('open');
+    if (toolbarTools.length > 4) toolbarTools[4].classList.add('active');
+    else toolbarTools[toolbarTools.length - 1].classList.add('active');
+  }
+
+  replayBtn.addEventListener('click', function() {
+    video.currentTime = Math.max(0, video.currentTime - 10);
+    showCard(resourceCard);
+  });
+
+  resourceCard.addEventListener('click', function() {
+    openResourcesPanel();
+  });
+
+  practiceCard.addEventListener('click', function() {
+    openPracticePanel();
+  });
+
+  closeResourcesBtn.addEventListener('click', function() {
+    closeAllPanels();
+  });
+
+  closePracticeBtn.addEventListener('click', function() {
+    closeAllPanels();
+  });
+
+  document.querySelectorAll('.resources-tag').forEach(function(tag) {
+    tag.addEventListener('click', function() {
+      document.querySelectorAll('.resources-tag').forEach(function(t) { t.classList.remove('active'); });
+      tag.classList.add('active');
+      var t = parseFloat(tag.getAttribute('data-time'));
+      if (!isNaN(t) && video.duration) { video.currentTime = t; }
+    });
+  });
+  forwardBtn.addEventListener('click', function() {
+    video.currentTime = Math.min(video.duration || 0, video.currentTime + 10);
+    showCard(practiceCard);
+  });
+
+  scrubberArea.addEventListener('click', function(e) {
+    if (!video.duration) return;
+    var rect = scrubberArea.getBoundingClientRect();
+    var pct = (e.clientX - rect.left) / rect.width;
+    video.currentTime = pct * video.duration;
+  });
+
+  var dragging = false;
+  scrubberArea.addEventListener('mousedown', function(e) {
+    dragging = true;
+    if (!video.duration) return;
+    var rect = scrubberArea.getBoundingClientRect();
+    var pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+    video.currentTime = pct * video.duration;
+    e.preventDefault();
+  });
+  document.addEventListener('mousemove', function(e) {
+    if (!dragging || !video.duration) return;
+    var rect = scrubberArea.getBoundingClientRect();
+    var pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+    video.currentTime = pct * video.duration;
+  });
+  document.addEventListener('mouseup', function() { dragging = false; });
+
+  fullscreenBtn.addEventListener('click', function() {
+    if (document.fullscreenElement) { document.exitFullscreen(); }
+    else { videoWrapper.requestFullscreen(); }
+  });
+
+  video.addEventListener('click', function() {
+    if (video.paused) { video.play(); } else { video.pause(); }
+  });
+
+  var curve = document.querySelector('.engagement-overlay');
+  scrubberArea.addEventListener('mouseenter', function() {
+    curve.classList.add('visible');
+  });
+  scrubberArea.addEventListener('mouseleave', function() {
+    curve.classList.remove('visible');
+  });
+  document.addEventListener('mousemove', function(e) {
+    if (!curve.classList.contains('visible')) return;
+    var r = scrubberArea.getBoundingClientRect();
+    if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) {
+      curve.classList.remove('visible');
+    }
+  });
+})();
+</script>
+</body>
+</html>
