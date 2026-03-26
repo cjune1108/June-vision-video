@@ -373,6 +373,7 @@
   .ctrl-icon.replay img    { top: 5.99%; left: 12.5%; width: 75%; height: 85.68%; }
   .ctrl-icon.forward img   { top: 5.99%; left: 12.5%; width: 75%; height: 85.68%; }
   .ctrl-icon.subs img      { top: 16.67%; left: 8.33%; width: 83.34%; height: 66.66%; }
+  .ctrl-icon.user img      { inset: 20%; width: 60%; height: 60%; }
   .ctrl-icon.settings img  { top: 8.33%; left: 10.33%; width: 79.34%; height: 83.34%; }
   .ctrl-icon.fullscr img   { inset: 12.5%;  width: 75%; height: 75%; }
 
@@ -718,6 +719,7 @@
     user-select: none;
     text-align: right;
     flex-shrink: 0;
+    white-space: pre;
   }
   .practice-editor-code .code-text {
     flex: 1;
@@ -988,6 +990,128 @@
   }
   .resources-content .resources-body li { margin: 0; }
 
+  /* ── Avatar Modal ──────────────────────────────── */
+  .avatar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+  }
+  .avatar-overlay.open { display: flex; }
+
+  .avatar-modal {
+    background: #fff;
+    border-radius: 16px;
+    width: 380px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    overflow: hidden;
+  }
+  .avatar-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px 0;
+  }
+  .avatar-modal-header h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #0f1114;
+    line-height: 28px;
+  }
+  .avatar-modal-close {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    color: #5b6780;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .avatar-modal-close:hover { color: #0f1114; }
+  .avatar-modal-close svg { width: 18px; height: 18px; }
+
+  .avatar-tabs {
+    display: flex;
+    gap: 0;
+    padding: 12px 24px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .avatar-tab {
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--weak);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .avatar-tab.active {
+    color: #0f1114;
+    border-bottom-color: #0f1114;
+  }
+  .avatar-tab:hover { color: #0f1114; }
+
+  .avatar-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px 24px;
+  }
+  .avatar-section-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #0f1114;
+    margin-bottom: 12px;
+  }
+  .avatar-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  .avatar-item {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 3px solid transparent;
+    overflow: hidden;
+    transition: border-color 0.15s;
+  }
+  .avatar-item:hover { border-color: #d0d8e8; }
+  .avatar-item.selected { border-color: var(--accent); }
+  .avatar-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 50%;
+  }
+
+  .avatar-modal-footer {
+    padding: 12px 24px 20px;
+  }
+  .avatar-apply-btn {
+    width: 100%;
+    padding: 12px;
+    background: #0056D2;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: var(--font);
+    transition: background 0.15s;
+  }
+  .avatar-apply-btn:hover { background: #0046b0; }
+
   /* ── Responsive ────────────────────────────────── */
   @media (max-width: 900px) {
     .main-layout {
@@ -1181,6 +1305,11 @@
                 <button class="ctrl-btn" aria-label="Subtitles">
                   <div class="ctrl-icon subs">
                     <img src="https://www.figma.com/api/mcp/asset/379036d1-77a5-4de2-acbb-596f09a0c240" alt="Subtitles">
+                  </div>
+                </button>
+                <button class="ctrl-btn" aria-label="User">
+                  <div class="ctrl-icon user">
+                    <img src="https://www.figma.com/api/mcp/asset/1b5f0f05-1716-4c0b-82f8-086bcc0a8884" alt="User">
                   </div>
                 </button>
                 <button class="ctrl-btn" aria-label="Settings">
@@ -1422,6 +1551,59 @@
           </div>
         </div>
       </aside>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ Avatar & Voice Modal ═══ -->
+<div class="avatar-overlay" id="avatarOverlay">
+  <div class="avatar-modal">
+    <div class="avatar-modal-header">
+      <h2>Avatar and voice</h2>
+      <div class="avatar-modal-close" id="avatarCloseBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </div>
+    </div>
+    <div class="avatar-tabs">
+      <div class="avatar-tab active">Avatar</div>
+      <div class="avatar-tab">Voice</div>
+    </div>
+    <div class="avatar-body">
+      <p class="avatar-section-title">Animals</p>
+      <div class="avatar-grid" id="avatarGrid">
+        <div class="avatar-item" data-avatar="frog"><img src="avatar/avatar-frog.png" alt="Frog"></div>
+        <div class="avatar-item" data-avatar="bear"><img src="avatar/avatar-bear.png" alt="Bear"></div>
+        <div class="avatar-item" data-avatar="pig"><img src="avatar/avatar-pig.png" alt="Pig"></div>
+        <div class="avatar-item" data-avatar="fox"><img src="avatar/avatar-fox.png" alt="Fox"></div>
+        <div class="avatar-item" data-avatar="cat"><img src="avatar/avatar-cat.png" alt="Cat"></div>
+        <div class="avatar-item" data-avatar="doghat"><img src="avatar/avatar-doghat.png" alt="Dog"></div>
+        <div class="avatar-item" data-avatar="dalmatian"><img src="avatar/avatar-dalmatian.png" alt="Dalmatian"></div>
+        <div class="avatar-item" data-avatar="beaver"><img src="avatar/avatar-beaver.png" alt="Beaver"></div>
+        <div class="avatar-item selected" data-avatar="polarbear"><img src="avatar/avatar-polarbear.png" alt="Polar Bear"></div>
+        <div class="avatar-item" data-avatar="bunny"><img src="avatar/avatar-bunny.png" alt="Bunny"></div>
+        <div class="avatar-item" data-avatar="hamster"><img src="avatar/avatar-hamster.png" alt="Hamster"></div>
+        <div class="avatar-item" data-avatar="redfox"><img src="avatar/avatar-redfox.png" alt="Red Fox"></div>
+        <div class="avatar-item" data-avatar="puppy"><img src="avatar/avatar-puppy.png" alt="Puppy"></div>
+        <div class="avatar-item" data-avatar="mouse"><img src="avatar/avatar-mouse.png" alt="Mouse"></div>
+        <div class="avatar-item" data-avatar="floppy"><img src="avatar/avatar-floppy.png" alt="Floppy"></div>
+        <div class="avatar-item" data-avatar="penguin"><img src="avatar/avatar-penguin.png" alt="Penguin"></div>
+        <div class="avatar-item" data-avatar="sheep"><img src="avatar/avatar-sheep.png" alt="Sheep"></div>
+        <div class="avatar-item" data-avatar="graycat"><img src="avatar/avatar-graycat.png" alt="Gray Cat"></div>
+      </div>
+      <p class="avatar-section-title">People</p>
+      <div class="avatar-grid">
+        <div class="avatar-item" data-avatar="person1"><img src="avatar/avatar-person1.png" alt="Person"></div>
+        <div class="avatar-item" data-avatar="person2"><img src="avatar/avatar-person2.png" alt="Person"></div>
+        <div class="avatar-item" data-avatar="person3"><img src="avatar/avatar-person3.png" alt="Person"></div>
+        <div class="avatar-item" data-avatar="person4"><img src="avatar/avatar-person4.png" alt="Person"></div>
+        <div class="avatar-item" data-avatar="person5"><img src="avatar/avatar-person5.png" alt="Person"></div>
+        <div class="avatar-item" data-avatar="person6"><img src="avatar/avatar-person6.png" alt="Person"></div>
+      </div>
+    </div>
+    <div class="avatar-modal-footer">
+      <button class="avatar-apply-btn" id="avatarApplyBtn">Apply</button>
     </div>
   </div>
 </div>
@@ -1668,6 +1850,46 @@
     if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) {
       curve.classList.remove('visible');
     }
+  });
+
+  var avatarOverlay = document.getElementById('avatarOverlay');
+  var avatarCloseBtn = document.getElementById('avatarCloseBtn');
+  var avatarApplyBtn = document.getElementById('avatarApplyBtn');
+  var userBtn = document.querySelector('[aria-label="User"]');
+  var avatarTabs = document.querySelectorAll('.avatar-tab');
+  var allAvatarItems = document.querySelectorAll('.avatar-item');
+  var wasPlayingBeforeModal = false;
+
+  userBtn.addEventListener('click', function() {
+    wasPlayingBeforeModal = !video.paused;
+    if (!video.paused) video.pause();
+    avatarOverlay.classList.add('open');
+  });
+
+  function closeAvatarModal() {
+    avatarOverlay.classList.remove('open');
+    if (wasPlayingBeforeModal) video.play();
+  }
+
+  avatarCloseBtn.addEventListener('click', closeAvatarModal);
+  avatarApplyBtn.addEventListener('click', closeAvatarModal);
+
+  avatarOverlay.addEventListener('click', function(e) {
+    if (e.target === avatarOverlay) closeAvatarModal();
+  });
+
+  avatarTabs.forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      avatarTabs.forEach(function(t) { t.classList.remove('active'); });
+      tab.classList.add('active');
+    });
+  });
+
+  allAvatarItems.forEach(function(item) {
+    item.addEventListener('click', function() {
+      allAvatarItems.forEach(function(i) { i.classList.remove('selected'); });
+      item.classList.add('selected');
+    });
   });
 })();
 </script>
