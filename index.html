@@ -67,10 +67,17 @@
     gap: 12.16px;
   }
   .logo-coursera {
-    width: 104.377px;
-    height: 15.201px;
-    position: relative;
+    display: flex;
+    align-items: center;
     flex-shrink: 0;
+  }
+  .logo-coursera-text {
+    font-size: 22px;
+    font-weight: 700;
+    color: #0056D2;
+    letter-spacing: -0.6px;
+    line-height: 1;
+    text-transform: lowercase;
   }
   .logo-coursera img {
     position: absolute;
@@ -114,6 +121,7 @@
     height: 100%;
     width: auto;
     display: block;
+    object-fit: contain;
   }
 
   .nav-actions {
@@ -367,6 +375,16 @@
     display: block;
     max-width: none;
   }
+  .ctrl-icon > svg {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 24px;
+    height: 24px;
+    display: block;
+    flex-shrink: 0;
+  }
   .ctrl-icon.pause img     { inset: 20.83%;  width: 58.34%; height: 58.34%; }
   .ctrl-icon.play img      { inset: 20.83%;  width: 58.34%; height: 58.34%; }
   .ctrl-icon.volume img    { top: 22.48%; left: 20.83%; width: 56.25%; height: 55.04%; }
@@ -496,11 +514,21 @@
     position: relative;
     overflow: hidden;
     flex-shrink: 0;
+    color: var(--weak);
   }
   .toolbar-tool-icon img {
     position: absolute;
     display: block;
     max-width: none;
+  }
+  .toolbar-tool-icon > svg {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 18px;
+    height: 18px;
+    display: block;
   }
   .toolbar-tool-icon.transcript img { top:16.67%; left:8.33%; width:83.34%; height:66.66%; }
   .toolbar-tool-icon.notes img      { top:10%; left:20%; width:60%; height:80%; }
@@ -515,8 +543,9 @@
     text-align: center;
     white-space: nowrap;
   }
-  .toolbar-tool-icon.resources img {
-    filter: brightness(0) opacity(0.45);
+  .toolbar-tool-icon.resources,
+  .toolbar-tool-icon.practice {
+    opacity: 0.85;
   }
   .toolbar-tool.active {
     background: #e8eef7;
@@ -524,8 +553,9 @@
   .toolbar-tool.active span {
     color: #2D3440;
   }
-  .toolbar-tool.active .toolbar-tool-icon img {
-    filter: brightness(0) opacity(0.82);
+  .toolbar-tool.active .toolbar-tool-icon {
+    color: #2D3440;
+    opacity: 1;
   }
 
   /* ── Practice Panel ──────────────────────────── */
@@ -1172,11 +1202,11 @@
       <div class="logo-desktop">
         <div class="logo-inner">
           <div class="logo-coursera">
-            <img src="https://www.figma.com/api/mcp/asset/c947d2cb-ef49-429b-87ac-74f4f3a4264e" alt="Coursera">
+            <span class="logo-coursera-text" aria-label="Coursera">coursera</span>
           </div>
           <div class="logo-partner-wrap">
             <div class="logo-partner-img">
-              <img src="https://www.figma.com/api/mcp/asset/ee531929-36ce-4954-b082-88ba80e3a127" alt="Google">
+              <img src="assets/google-wordmark.png" alt="Google">
             </div>
           </div>
         </div>
@@ -1220,13 +1250,13 @@
 
           <!-- ═══ Video Player ═══ -->
           <div class="video-wrapper" id="videoWrapper">
-            <video id="videoPlayer" src="tutorial.mp4" preload="auto" muted></video>
+            <video id="videoPlayer" src="tutorial.mp4" poster="video-poster.png" preload="auto" muted></video>
 
             <!-- Engagement Curve — hidden by default, shown on hover -->
             <div class="engagement-overlay">
               <div class="engagement-backdrop"></div>
               <div class="engagement-curve">
-                <img src="https://www.figma.com/api/mcp/asset/f2d2eb3b-0b1a-45e8-b768-69425f5bb026" alt="">
+                <img src="assets/engagement-curve.svg" alt="">
               </div>
             </div>
 
@@ -1237,7 +1267,7 @@
             <div class="resource-card" id="resourceCard">
               <div class="resource-card-inner">
                 <div class="resource-card-thumb">
-                  <img src="https://www.figma.com/api/mcp/asset/3fb3ed13-c49e-4f99-8996-36de3eabf482" alt="">
+                  <img src="workflow-thumb.png" alt="">
                 </div>
                 <div class="resource-card-text">
                   <div class="resource-card-title">Many learners find it helpful to understand this concept by reviewing a visual</div>
@@ -1251,7 +1281,7 @@
             <div class="resource-card" id="practiceCard">
               <div class="resource-card-inner">
                 <div class="resource-card-thumb">
-                  <img src="https://www.figma.com/api/mcp/asset/ee8ac591-947f-49a5-916e-8869c1e63737" alt="">
+                  <img src="code-practice-thumb.png" alt="">
                 </div>
                 <div class="resource-card-text">
                   <div class="resource-card-title">Ready to try it yourself?</div>
@@ -1278,7 +1308,7 @@
               <div class="controls-left">
                 <button class="ctrl-btn" id="playPauseBtn" aria-label="Play/Pause">
                   <div class="ctrl-icon pause" id="pauseIcon">
-                    <img src="https://www.figma.com/api/mcp/asset/b37e47c3-1d58-41ec-974d-937a49474964" alt="Pause">
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1" fill="white"/><rect x="14" y="5" width="4" height="14" rx="1" fill="white"/></svg>
                   </div>
                   <svg id="playIcon" width="28" height="28" viewBox="0 0 28 28" fill="none" style="display:none; flex-shrink:0;">
                     <path d="M9.33 6.22v15.56c0 .8.87 1.3 1.56.88l12.45-7.78a1.04 1.04 0 000-1.76L10.89 5.34c-.69-.42-1.56.08-1.56.88z" fill="white"/>
@@ -1286,18 +1316,20 @@
                 </button>
                 <button class="ctrl-btn" aria-label="Volume">
                   <div class="ctrl-icon volume">
-                    <img src="https://www.figma.com/api/mcp/asset/8a49c681-1e1e-40d1-bdf3-8b2b490c3924" alt="Volume">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M11 5L6 9H3v6h3l5 4V5z"/><path d="M16 9a5 5 0 010 6"/><path d="M19 6a8 8 0 010 12"/>
+                    </svg>
                   </div>
                 </button>
                 <button class="ctrl-btn" id="replayBtn" aria-label="Replay 10s">
                   <div class="ctrl-icon replay">
-                    <img src="https://www.figma.com/api/mcp/asset/f525a9df-aab8-4f1b-9ace-1b475d7d9a03" alt="Replay 10">
+                    <img src="assets/icon-replay10-figma.svg" alt="" aria-hidden="true">
                   </div>
                 </button>
                 <span class="ctrl-time" id="timeDisplay">0:00  /  0:00</span>
                 <button class="ctrl-btn" id="forwardBtn" aria-label="Forward 10s">
                   <div class="ctrl-icon forward">
-                    <img src="https://www.figma.com/api/mcp/asset/7ce8b3dd-2682-4dd1-b752-29b334ac0876" alt="Forward 10">
+                    <img src="assets/icon-forward10-figma.svg" alt="" aria-hidden="true">
                   </div>
                 </button>
               </div>
@@ -1305,22 +1337,28 @@
                 <span class="ctrl-speed">1x</span>
                 <button class="ctrl-btn" aria-label="Subtitles">
                   <div class="ctrl-icon subs">
-                    <img src="https://www.figma.com/api/mcp/asset/379036d1-77a5-4de2-acbb-596f09a0c240" alt="Subtitles">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 9h6M7 13h4"/><circle cx="16" cy="13" r="1.5" fill="white"/>
+                    </svg>
                   </div>
                 </button>
                 <button class="ctrl-btn" aria-label="User">
                   <div class="ctrl-icon user">
-                    <img src="https://www.figma.com/api/mcp/asset/1b5f0f05-1716-4c0b-82f8-086bcc0a8884" alt="User">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <circle cx="12" cy="8" r="3.5"/><path d="M5 20v-1a7 7 0 0114 0v1"/>
+                    </svg>
                   </div>
                 </button>
                 <button class="ctrl-btn" aria-label="Settings">
                   <div class="ctrl-icon settings">
-                    <img src="https://www.figma.com/api/mcp/asset/ce65d150-5242-4ed5-aebb-a042bb00771c" alt="Settings">
+                    <img src="assets/icon-settings-figma.svg" alt="" aria-hidden="true">
                   </div>
                 </button>
                 <button class="ctrl-btn" id="fullscreenBtn" aria-label="Fullscreen">
                   <div class="ctrl-icon fullscr">
-                    <img src="https://www.figma.com/api/mcp/asset/b028ec16-df36-4f7b-903d-ad5e78f7a835" alt="Fullscreen">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M8 3H3v5M16 3h5v5M3 16v5h5M21 16v5h-5"/>
+                    </svg>
                   </div>
                 </button>
               </div>
@@ -1502,7 +1540,7 @@
         <div class="resources-content">
           <h3>Workflow automation diagram</h3>
           <p class="resources-subtitle">Architecture of an Azure-based web application system</p>
-          <img class="resources-diagram" src="https://www.figma.com/api/mcp/asset/41a96973-40cc-4376-b0bb-44ea0629ee36" alt="Architecture diagram">
+          <img class="resources-diagram" src="workflow-diagram.png" alt="Architecture diagram">
           <div class="resources-body">
             <p>User requests go through a load balancer to web servers.</p>
             <p>Requests are routed via Azure Application Gateway to Azure Functions.</p>
@@ -1522,31 +1560,41 @@
         <div class="toolbar-ctas">
           <div class="toolbar-tool">
             <div class="toolbar-tool-icon transcript">
-              <img src="https://www.figma.com/api/mcp/asset/89edb446-66b0-40d0-87c5-1eef3f56b7f0" alt="">
+              <svg viewBox="0 0 16.6667 13.3333" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path fill="currentColor" d="M1.66667 13.3333C1.20833 13.3333 0.815972 13.1701 0.489583 12.8437C0.163194 12.5174 0 12.125 0 11.6667V1.66667C0 1.20833 0.163194 0.815972 0.489583 0.489583C0.815972 0.163194 1.20833 0 1.66667 0H15C15.4583 0 15.8507 0.163194 16.1771 0.489583C16.5035 0.815972 16.6667 1.20833 16.6667 1.66667V11.6667C16.6667 12.125 16.5035 12.5174 16.1771 12.8437C15.8507 13.1701 15.4583 13.3333 15 13.3333H1.66667ZM1.66667 11.6667H15V1.66667H1.66667V11.6667ZM4.16667 10H9.16667C9.40278 10 9.60069 9.92014 9.76042 9.76042C9.92014 9.60069 10 9.40278 10 9.16667C10 8.93056 9.92014 8.73264 9.76042 8.57292C9.60069 8.41319 9.40278 8.33333 9.16667 8.33333H4.16667C3.93056 8.33333 3.73264 8.41319 3.57292 8.57292C3.41319 8.73264 3.33333 8.93056 3.33333 9.16667C3.33333 9.40278 3.41319 9.60069 3.57292 9.76042C3.73264 9.92014 3.93056 10 4.16667 10ZM7.5 6.66667H12.5C12.7361 6.66667 12.934 6.58681 13.0937 6.42708C13.2535 6.26736 13.3333 6.06944 13.3333 5.83333C13.3333 5.59722 13.2535 5.39931 13.0937 5.23958C12.934 5.07986 12.7361 5 12.5 5H7.5C7.26389 5 7.06597 5.07986 6.90625 5.23958C6.74653 5.39931 6.66667 5.59722 6.66667 5.83333C6.66667 6.06944 6.74653 6.26736 6.90625 6.42708C7.06597 6.58681 7.26389 6.66667 7.5 6.66667ZM4.16667 6.66667C4.40278 6.66667 4.60069 6.58681 4.76042 6.42708C4.92014 6.26736 5 6.06944 5 5.83333C5 5.59722 4.92014 5.39931 4.76042 5.23958C4.60069 5.07986 4.40278 5 4.16667 5C3.93056 5 3.73264 5.07986 3.57292 5.23958C3.41319 5.39931 3.33333 5.59722 3.33333 5.83333C3.33333 6.06944 3.41319 6.26736 3.57292 6.42708C3.73264 6.58681 3.93056 6.66667 4.16667 6.66667ZM12.5 10C12.7361 10 12.934 9.92014 13.0937 9.76042C13.2535 9.60069 13.3333 9.40278 13.3333 9.16667C13.3333 8.93056 13.2535 8.73264 13.0937 8.57292C12.934 8.41319 12.7361 8.33333 12.5 8.33333C12.2639 8.33333 12.066 8.41319 11.9062 8.57292C11.7465 8.73264 11.6667 8.93056 11.6667 9.16667C11.6667 9.40278 11.7465 9.60069 11.9062 9.76042C12.066 9.92014 12.2639 10 12.5 10Z"/>
+              </svg>
             </div>
             <span>Transcript</span>
           </div>
           <div class="toolbar-tool">
             <div class="toolbar-tool-icon notes">
-              <img src="https://www.figma.com/api/mcp/asset/32ffd782-158b-4eb5-a62b-c28f8dd622b6" alt="">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/>
+              </svg>
             </div>
             <span>Notes</span>
           </div>
           <div class="toolbar-tool">
             <div class="toolbar-tool-icon files">
-              <img src="https://www.figma.com/api/mcp/asset/4a8f13db-bd7b-44b9-a419-c44afe4ad0e2" alt="">
+              <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path fill="currentColor" d="M6.75 9.5H9.25C9.4625 9.5 9.64063 9.42854 9.78438 9.28563C9.92813 9.14271 10 8.96563 10 8.75438C10 8.54313 9.92813 8.36458 9.78438 8.21875C9.64063 8.07292 9.4625 8 9.25 8H6.75C6.5375 8 6.35938 8.07146 6.21563 8.21438C6.07188 8.35729 6 8.53438 6 8.74563C6 8.95688 6.07188 9.13542 6.21563 9.28125C6.35938 9.42708 6.5375 9.5 6.75 9.5ZM6.75 7H12.25C12.4625 7 12.6406 6.92854 12.7844 6.78563C12.9281 6.64271 13 6.46563 13 6.25438C13 6.04313 12.9281 5.86458 12.7844 5.71875C12.6406 5.57292 12.4625 5.5 12.25 5.5H6.75C6.5375 5.5 6.35938 5.57146 6.21563 5.71437C6.07188 5.85729 6 6.03437 6 6.24562C6 6.45687 6.07188 6.63542 6.21563 6.78125C6.35938 6.92708 6.5375 7 6.75 7ZM6.75 4.5H12.25C12.4625 4.5 12.6406 4.42854 12.7844 4.28563C12.9281 4.14271 13 3.96563 13 3.75438C13 3.54313 12.9281 3.36458 12.7844 3.21875C12.6406 3.07292 12.4625 3 12.25 3H6.75C6.5375 3 6.35938 3.07146 6.21563 3.21437C6.07188 3.35729 6 3.53437 6 3.74562C6 3.95687 6.07188 4.13542 6.21563 4.28125C6.35938 4.42708 6.5375 4.5 6.75 4.5ZM4.5 13C4.0875 13 3.73437 12.8531 3.44062 12.5594C3.14687 12.2656 3 11.9125 3 11.5V1.5C3 1.0875 3.14687 0.734376 3.44062 0.440626C3.73437 0.146876 4.0875 0 4.5 0H14.5C14.9125 0 15.2656 0.146876 15.5594 0.440626C15.8531 0.734376 16 1.0875 16 1.5V11.5C16 11.9125 15.8531 12.2656 15.5594 12.5594C15.2656 12.8531 14.9125 13 14.5 13H4.5ZM4.5 11.5H14.5V1.5H4.5V11.5ZM1.5 16C1.0875 16 0.734375 15.8531 0.440625 15.5594C0.146875 15.2656 0 14.9125 0 14.5V3.75C0 3.5375 0.0714583 3.35937 0.214375 3.21562C0.357292 3.07187 0.534375 3 0.745625 3C0.956875 3 1.13542 3.07187 1.28125 3.21562C1.42708 3.35937 1.5 3.5375 1.5 3.75V14.5H12.25C12.4625 14.5 12.6406 14.5715 12.7844 14.7144C12.9281 14.8573 13 15.0344 13 15.2456C13 15.4569 12.9281 15.6354 12.7844 15.7812C12.6406 15.9271 12.4625 16 12.25 16H1.5Z"/>
+              </svg>
             </div>
             <span>Files</span>
           </div>
           <div class="toolbar-tool">
             <div class="toolbar-tool-icon resources">
-              <img src="https://www.figma.com/api/mcp/asset/db5fbf40-bc49-484d-aefa-5d48cbbd8e95" alt="">
+              <svg viewBox="0 0 16.6539 16.6526" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path fill="currentColor" d="M6.88869 2.19374C7.07658 1.73456 7.72737 1.73436 7.91506 2.19374L8.93166 4.68495C9.49469 6.06376 10.5889 7.15813 11.9678 7.72108L14.458 8.73768C14.9177 8.92535 14.9177 9.57638 14.458 9.76405L11.9678 10.7807C10.589 11.3436 9.49471 12.438 8.93166 13.8168L7.91506 16.308C7.72743 16.7676 7.07652 16.7674 6.88869 16.308L5.87111 13.8168C5.30806 12.4381 4.21377 11.3436 2.83498 10.7807L0.344745 9.76405C-0.114915 9.57638 -0.114915 8.92535 0.344745 8.73768L2.83498 7.72108C4.21382 7.15813 5.30808 6.06374 5.87111 4.68495L6.88869 2.19374ZM13.5703 0.206435C13.6828 -0.0688802 14.0729 -0.0687429 14.1856 0.206435L14.6651 1.38124C14.7776 1.65677 14.997 1.87617 15.2725 1.98866L16.4473 2.46815C16.7227 2.5807 16.7228 2.97089 16.4473 3.08339L15.2725 3.56288C14.997 3.67536 14.7776 3.89384 14.6651 4.16933L14.1856 5.34413C14.0731 5.61967 13.6828 5.61967 13.5703 5.34413L13.0908 4.16933C12.9783 3.89396 12.7598 3.67534 12.4844 3.56288L11.3096 3.08339C11.0341 2.97089 11.0341 2.58065 11.3096 2.46815L12.4844 1.98866C12.7599 1.87617 12.9783 1.65677 13.0908 1.38124L13.5703 0.206435Z"/>
+              </svg>
             </div>
             <span>Resources</span>
           </div>
           <div class="toolbar-tool">
-            <div class="toolbar-tool-icon resources">
-              <img src="https://www.figma.com/api/mcp/asset/0e8afa0d-d259-412d-b408-95a018d719b3" alt="">
+            <div class="toolbar-tool-icon practice">
+              <svg viewBox="0 0 16.6494 16.66" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path fill="currentColor" d="M15.5241 6.15778L14.3572 4.99086L14.9823 4.34489L12.3151 1.67766L11.6691 2.30279L10.4814 1.11504L11.1065 0.469071C11.426 0.149559 11.8219 -0.00672424 12.2943 0.000221678C12.7666 0.00716759 13.1625 0.170397 13.482 0.489909L16.1701 3.17798C16.4896 3.49749 16.6494 3.88993 16.6494 4.35531C16.6494 4.82069 16.4896 5.21313 16.1701 5.53264L15.5241 6.15778ZM5.522 16.1807C5.20249 16.5002 4.81005 16.66 4.34467 16.66C3.87929 16.66 3.48685 16.5002 3.16734 16.1807L0.479268 13.4927C0.159756 13.1732 0 12.7807 0 12.3153C0 11.85 0.159756 11.4575 0.479268 11.138L1.1044 10.5129L2.29215 11.7006L1.64618 12.3257L4.33425 15.0138L4.95938 14.3678L6.14714 15.5556L5.522 16.1807ZM13.7946 9.17925L14.9823 7.9915L8.6685 1.67766L7.48075 2.86541L13.7946 9.17925ZM7.96002 15.0138L9.14777 13.8052L2.85477 7.51223L1.64618 8.69998L7.96002 15.0138ZM7.83499 10.1378L10.1271 7.86647L8.79353 6.53286L6.52222 8.82501L7.83499 10.1378ZM9.14777 16.1807C8.82826 16.5002 8.43234 16.66 7.96002 16.66C7.4877 16.66 7.09178 16.5002 6.77227 16.1807L0.479268 9.88773C0.159756 9.56822 0 9.1723 0 8.69998C0 8.22766 0.159756 7.83174 0.479268 7.51223L1.66702 6.32448C1.98653 6.00497 2.37898 5.84521 2.84435 5.84521C3.30973 5.84521 3.70217 6.00497 4.02169 6.32448L5.33446 7.63726L7.62662 5.3451L6.31384 4.05316C5.99433 3.73365 5.83457 3.33773 5.83457 2.86541C5.83457 2.39309 5.99433 1.99717 6.31384 1.67766L7.50159 0.489909C7.8211 0.170397 8.21355 0.0106406 8.67892 0.0106406C9.1443 0.0106406 9.53674 0.170397 9.85626 0.489909L16.1701 6.80375C16.4896 7.12326 16.6494 7.5157 16.6494 7.98108C16.6494 8.44646 16.4896 8.8389 16.1701 9.15841L14.9823 10.3462C14.6628 10.6657 14.2669 10.8254 13.7946 10.8254C13.3223 10.8254 12.9263 10.6657 12.6068 10.3462L11.3149 9.03339L9.02275 11.3255L10.3355 12.6383C10.655 12.9578 10.8148 13.3503 10.8148 13.8156C10.8148 14.281 10.655 14.6735 10.3355 14.993L9.14777 16.1807Z"/>
+              </svg>
             </div>
             <span>Practice</span>
           </div>
